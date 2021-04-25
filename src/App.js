@@ -7,17 +7,14 @@ const columns = [
   {
     name: 'First Name',
     selector: 'firstName',
-    sortable: true,
   },
   {
     name: 'Last Name',
     selector: 'lastName',
-    sortable: true,
   },
   {
     name: 'Card Id',
     selector: 'cardId',
-    sortable: true,
   },
   {
     name: 'Summary',

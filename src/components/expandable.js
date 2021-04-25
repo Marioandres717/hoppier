@@ -4,22 +4,24 @@ const columns = [
   {
     name: 'Date',
     selector: 'date',
-    // sortable: true,
+    format: (row) => row.date.toString(),
+    right: true,
   },
   {
     name: 'Merchant',
     selector: 'name',
-    // sortable: true,
+    right: true,
   },
   {
     name: 'Amount',
     selector: 'amountInUSDCents',
-    // sortable: true
+    format: (row) => `$${row.amountInUSDCents / 100}`,
+    right: true,
   },
 ];
 
-function ExpandableComponent({ data }) {
-  return <DataTable title="Summary" columns={columns} data={data} />;
+function ExpandableComponent({ data: { transactions } }) {
+  return <DataTable title="Summary" columns={columns} data={transactions} />;
 }
 
 export default ExpandableComponent;
