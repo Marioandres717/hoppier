@@ -12,6 +12,7 @@ function App() {
     );
 
   useEffect(() => {
+    console.time('transformation');
     async function fetchData() {
       const users = await getUsers();
       const transactions = await getTransactions();
@@ -41,6 +42,7 @@ function App() {
         ];
       }, []);
       setUsers(userWithTransactionInformation);
+      console.timeEnd('transformation');
     }
     fetchData();
   }, []);
