@@ -9,7 +9,7 @@ function ExpandableComponent({ data: { transactions }, currency }) {
     {
       name: 'Date',
       selector: 'date',
-      format: (row) => row.date.toString(),
+      format: (row) => row.date.toLocaleString(),
       sortable: true,
     },
     {

@@ -46,7 +46,7 @@ function App() {
   }, []);
 
   return (
-    <div style={{ maxWidth: 1200, margin: 'auto' }}>
+    <div style={{ maxWidth: 800, margin: 'auto' }}>
       <Table
         data={users}
         currency={currency}
