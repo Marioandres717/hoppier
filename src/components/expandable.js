@@ -5,14 +5,17 @@ const columns = [
     name: 'Date',
     selector: 'date',
     format: (row) => row.date.toString(),
-    right: true,
     sortable: true,
   },
   {
     name: 'Merchant',
     selector: 'name',
-    right: true,
     sortable: true,
+  },
+  {
+    name: 'Network ID',
+    selector: 'networkId',
+    right: true,
   },
   {
     name: 'Amount',
