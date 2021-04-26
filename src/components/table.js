@@ -30,7 +30,7 @@ function getColumns(currency) {
       right: true,
     },
     {
-      name: 'Summary',
+      name: 'Total Spend',
       cell: (row) =>
         `$${roundCurrencyToCents(
           convertCurrency(currency, summaryOfTotalSpending(row.transactions)) /
