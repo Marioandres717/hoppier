@@ -33,7 +33,13 @@ function ExpandableComponent({ data: { transactions }, currency }) {
       sortable: true,
     },
   ];
-  return <DataTable title="Summary" columns={columns} data={transactions} />;
+  return (
+    <DataTable
+      title="Summary of Transactions"
+      columns={columns}
+      data={transactions}
+    />
+  );
 }
 
 export default ExpandableComponent;
