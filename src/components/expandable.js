@@ -4,8 +4,8 @@ import {
   roundCurrencyToCents,
 } from '../utils/currencyConstants';
 
-function ExpandableComponent({ data: { transactions }, currency }) {
-  const columns = [
+function getColumns(currency) {
+  return [
     {
       name: 'Date',
       selector: 'date',
@@ -33,6 +33,10 @@ function ExpandableComponent({ data: { transactions }, currency }) {
       sortable: true,
     },
   ];
+}
+
+function ExpandableComponent({ data: { transactions }, currency }) {
+  const columns = getColumns(currency);
   return (
     <DataTable
       title="Summary of Transactions"

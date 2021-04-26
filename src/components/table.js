@@ -14,8 +14,8 @@ function summaryOfTotalSpending(transactions) {
   return total;
 }
 
-function Table({ data, currency, onSelectCurrency }) {
-  const columns = [
+function getColumns(currency) {
+  return [
     {
       name: 'First Name',
       selector: 'firstName',
@@ -39,6 +39,10 @@ function Table({ data, currency, onSelectCurrency }) {
       right: true,
     },
   ];
+}
+
+function Table({ data, currency, onSelectCurrency }) {
+  const columns = getColumns(currency);
   return (
     <DataTable
       title="Users Transactions"
