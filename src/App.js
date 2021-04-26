@@ -1,39 +1,16 @@
 import { useEffect, useState } from 'react';
-import DataTable from 'react-data-table-component';
 import { getMerchants, getTransactions, getUsers } from './utils/GraphQLData';
-import ExpandableComponent from './components/expandable';
-
-const columns = [
-  {
-    name: 'First Name',
-    selector: 'firstName',
-  },
-  {
-    name: 'Last Name',
-    selector: 'lastName',
-  },
-  {
-    name: 'Card Id',
-    selector: 'cardId',
-    right: true,
-  },
-  {
-    name: 'Summary',
-    cell: (row) => summaryOfTotalSpending(row.transactions),
-    right: true,
-  },
-];
-
-function summaryOfTotalSpending(transactions) {
-  const total = transactions.reduce(
-    (acc, { amountInUSDCents }) => acc + amountInUSDCents,
-    0
-  );
-  return <span>${total / 100}</span>;
-}
+import { CurrencyEnum } from './utils/currencyEnum';
+import Table from './components/table';
 
 function App() {
   const [users, setUsers] = useState([]);
+  const [currency, setCurrency] = useState(CurrencyEnum.USD);
+
+  const onSelectCurrency = () =>
+    setCurrency((value) =>
+      value === CurrencyEnum.USD ? CurrencyEnum.CAD : CurrencyEnum.USD
+    );
 
   useEffect(() => {
     async function fetchData() {
@@ -64,8 +41,6 @@ function App() {
           { ...user, transactions: transactionsWithMerchantInfo },
         ];
       }, []);
-
-      console.log(`object`, userWithTransactionInformation);
       setUsers(userWithTransactionInformation);
     }
     fetchData();
@@ -73,13 +48,10 @@ function App() {
 
   return (
     <div style={{ maxWidth: 1200, margin: 'auto' }}>
-      <DataTable
-        title="Users Transactions"
-        columns={columns}
+      <Table
         data={users}
-        expandableRows
-        expandableRowsComponent={<ExpandableComponent />}
-        progressPending={users.length === 0}
+        currency={currency}
+        onSelectCurrency={onSelectCurrency}
       />
     </div>
   );
