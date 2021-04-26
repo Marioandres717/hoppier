@@ -17,29 +17,11 @@ function App() {
       const transactions = await getTransactions();
       const merchants = await getMerchants();
 
-      const userWithTransactionInformation = users.reduce((acc, user) => {
-        const transactionsWithMerchantInfo = transactions.reduce(
-          (acc, transaction) => {
-            if (transaction.cardId === user.cardId) {
-              const merchant = merchants.find(
-                (merchant) =>
-                  merchant.networkId === transaction.merchantNetworkId
-              );
-              const transactionWithMerchantInfo = {
-                ...transaction,
-                ...merchant,
-              };
-              return [...acc, transactionWithMerchantInfo];
-            }
-            return acc;
-          },
-          []
-        );
-        return [
-          ...acc,
-          { ...user, transactions: transactionsWithMerchantInfo },
-        ];
-      }, []);
+      const userWithTransactionInformation = transformData(
+        users,
+        transactions,
+        merchants
+      );
       setUsers(userWithTransactionInformation);
     }
     fetchData();
@@ -57,3 +39,29 @@ function App() {
 }
 
 export default App;
+
+function transformData(users, transactions, merchants) {
+  return transactions
+    .map((transaction) => {
+      const user = users.find(({ cardId }) => cardId === transaction.cardId);
+      const merchant = merchants.find(
+        ({ networkId }) => networkId === transaction.merchantNetworkId
+      );
+      return {
+        ...user,
+        transactionWithCompleteInfo: { ...transaction, ...merchant },
+      };
+    })
+    .reduce((acc, val) => {
+      const userIndex = acc.findIndex(({ cardId }) => cardId === val.cardId);
+      if (userIndex >= 0) {
+        acc[userIndex].transactions = [
+          ...acc[userIndex].transactions,
+          val.transactionWithCompleteInfo,
+        ];
+        return acc;
+      }
+      const { transactionWithCompleteInfo } = val;
+      return [...acc, { ...val, transactions: [transactionWithCompleteInfo] }];
+    }, []);
+}
