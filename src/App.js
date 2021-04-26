@@ -1,15 +1,14 @@
 import { useEffect, useState } from 'react';
 import { getMerchants, getTransactions, getUsers } from './utils/GraphQLData';
-import { CurrencyEnum } from './utils/currencyEnum';
+import { CURRENCY_ENUM } from './utils/currencyConstants';
 import Table from './components/table';
 
 function App() {
   const [users, setUsers] = useState([]);
-  const [currency, setCurrency] = useState(CurrencyEnum.USD);
-
+  const [currency, setCurrency] = useState(CURRENCY_ENUM.USD);
   const onSelectCurrency = () =>
     setCurrency((value) =>
-      value === CurrencyEnum.USD ? CurrencyEnum.CAD : CurrencyEnum.USD
+      value === CURRENCY_ENUM.USD ? CURRENCY_ENUM.CAD : CURRENCY_ENUM.USD
     );
 
   useEffect(() => {

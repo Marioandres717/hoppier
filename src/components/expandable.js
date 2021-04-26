@@ -1,4 +1,8 @@
 import DataTable from 'react-data-table-component';
+import {
+  convertCurrency,
+  roundCurrencyToCents,
+} from '../utils/currencyConstants';
 
 function ExpandableComponent({ data: { transactions }, currency }) {
   const columns = [
@@ -21,7 +25,10 @@ function ExpandableComponent({ data: { transactions }, currency }) {
     {
       name: 'Amount',
       selector: 'amountInUSDCents',
-      format: (row) => `$${row.amountInUSDCents / 100}`,
+      format: (row) =>
+        `$${roundCurrencyToCents(
+          convertCurrency(currency, row.amountInUSDCents) / 100
+        )}`,
       right: true,
       sortable: true,
     },
