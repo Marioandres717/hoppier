@@ -6,17 +6,20 @@ const columns = [
     selector: 'date',
     format: (row) => row.date.toString(),
     right: true,
+    sortable: true,
   },
   {
     name: 'Merchant',
     selector: 'name',
     right: true,
+    sortable: true,
   },
   {
     name: 'Amount',
     selector: 'amountInUSDCents',
     format: (row) => `$${row.amountInUSDCents / 100}`,
     right: true,
+    sortable: true,
   },
 ];
 
